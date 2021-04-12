@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EmployeeCrud.Models;
+using Microsoft.EntityFrameworkCore;
+
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -17,7 +19,7 @@ namespace EmployeeCrud.Data
         {
         }
 
-        public virtual DbSet<Employee> Employee { get; set; }
+        public virtual DbSet<Employee> Employees { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

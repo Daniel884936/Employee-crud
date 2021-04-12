@@ -1,4 +1,5 @@
 using EmployeeCrud.Data;
+using EmployeeCrud.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,8 @@ namespace EmployeeCrud
             {
                 options.UseSqlServer(Configuration.GetConnectionString("EmployeeCrud"));
             });
+
+            services.AddTransient<IEmployeeRepository, EmployeeRepository>();
             
             services.AddControllers();
         }

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using EmployeeCrud.Dtos;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace EmployeeCrud.Controllers
 {
@@ -6,5 +8,10 @@ namespace EmployeeCrud.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
+        [HttpPost]
+        public async Task<IActionResult> Add(EmployeeCreateDto employee)
+        {
+            return Ok("");
+        }
     }
 }

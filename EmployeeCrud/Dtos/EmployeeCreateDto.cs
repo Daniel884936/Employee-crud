@@ -1,11 +1,14 @@
-﻿namespace EmployeeCrud.Dtos
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace EmployeeCrud.Dtos
 {
-    public public class EmployeeCreateDto
+#warning Dtos Must be plane objects
+
+    public class EmployeeCreateDto : EmployeeDto
     {
-        public string Name { get; set; }
-        public string Surnames { get; set; }
-        public int? Age { get; set; }
-        public int? PhoneNumber { get; set; }
+        [Required]
+        [MaxLength(30)]
+        [EmailAddress]
         public string Email { get; set; }
     }
 }

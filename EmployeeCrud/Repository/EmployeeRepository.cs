@@ -18,20 +18,32 @@ namespace EmployeeCrud.Repository
         //public void Add(Employee employee) => _context.Employees.Add(employee);
         public async Task<Employee> GetById(int employeId)
         {
-           var employee =  await  _context.Employees.FirstOrDefaultAsync(x => x.EmployeeId == employeId);
+           var employee =  await  _context.Employee.FirstOrDefaultAsync(x => x.EmployeeId == employeId);
            return employee;
         }
 
-        public void Delete(Employee employee) => _context.Employees.Remove(employee);
+        public async Task Delete(Employee employee) {
+            _context.Employee.Remove(employee);
+            await _context.SaveChangesAsync();
+        }
 
-        public IEnumerable<Employee> GetAll() => _context.Employees;
+        public IEnumerable<Employee> GetAll() => _context.Employee;
 
-        public void Update(Employee employee) => _context.Employees.Update(employee);
+        public async Task Update(Employee employee) {
+            _context.Employee.Update(employee);
+            await _context.SaveChangesAsync();
+        }
 
         public async Task<Employee> Add(Employee employee) {
             await _context.AddAsync(employee);
+            await _context.SaveChangesAsync();
             return employee;
         }
-        
+
+        public async Task<Employee> GetEmail(string email)
+        {
+            var employee = await _context.Employee.FirstOrDefaultAsync(x => x.Email == email);
+            return employee;
+        }
     }
 }

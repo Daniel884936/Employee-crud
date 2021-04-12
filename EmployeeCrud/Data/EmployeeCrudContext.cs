@@ -10,21 +10,21 @@ namespace EmployeeCrud.Data
 {
     public partial class EmployeeCrudContext : DbContext
     {
-        public EmployeeCrudContext()
-        {
-        }
 
         public EmployeeCrudContext(DbContextOptions<EmployeeCrudContext> options)
             : base(options)
         {
         }
 
-        public virtual DbSet<Employee> Employees { get; set; }
+        public virtual DbSet<Employee> Employee { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Employee>(entity =>
             {
+
+                entity.HasKey(e => e.EmployeeId);
+
                 entity.HasIndex(e => e.Email)
                     .HasName("UN_EMPLOYEE_EMAIL")
                     .IsUnique();

@@ -4,13 +4,13 @@ using EmployeeCrud.Models;
 
 namespace EmployeeCrud.Mappers
 {
-    public class UserMapper: Profile
+    public class EmployeeMapper: Profile
     {
-        public UserMapper()
+        public EmployeeMapper()
         {
             CreateMap<EmployeeCreateDto, Employee>();
             CreateMap<Employee, EmployeeReadDto>();
-
+            CreateMap<EmployeeDto, Employee>();
         }
     }
 }

@@ -30,7 +30,7 @@ namespace EmployeeCrud.Controllers
             var employee = _mapper.Map<Employee>(employeeCreateDto);
             try
             {
-                var emailExist = _employeeRepository.GetEmail(employee.Email);
+                var emailExist = await _employeeRepository.GetByEmail(employee.Email);
                 if(emailExist != null)
                 {
                     response = new ApiResponse<EmployeeReadDto>(null)

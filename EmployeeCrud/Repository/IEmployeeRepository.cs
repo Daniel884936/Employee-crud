@@ -7,7 +7,7 @@ namespace EmployeeCrud.Repository
     public interface IEmployeeRepository
     {
         Task<Employee> GetById(int employeId);
-        Task<Employee> GetEmail(string email);
+        Task<Employee> GetByEmail(string email);
 
         IEnumerable< Employee> GetAll();
         Task<Employee> Add(Employee employee);

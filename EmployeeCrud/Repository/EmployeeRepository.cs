@@ -40,7 +40,7 @@ namespace EmployeeCrud.Repository
             return employee;
         }
 
-        public async Task<Employee> GetEmail(string email)
+        public async Task<Employee> GetByEmail(string email)
         {
             var employee = await _context.Employee.FirstOrDefaultAsync(x => x.Email == email);
             return employee;

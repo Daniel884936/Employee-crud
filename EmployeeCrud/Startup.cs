@@ -1,3 +1,4 @@
+using System.Threading;
 using EmployeeCrud.Data;
 using EmployeeCrud.Repository;
 using Microsoft.AspNetCore.Builder;
@@ -28,10 +29,17 @@ namespace EmployeeCrud
             {
                 options.UseSqlServer(Configuration.GetConnectionString("EmployeeCrud"));
             });
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    builder => builder.WithOrigins("http://localhost:4200")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+            });
 
             services.AddTransient<IEmployeeRepository, EmployeeRepository>();
-            
-            services.AddControllers();
+
+            services.AddControllers().AddNewtonsoftJson();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,7 +51,9 @@ namespace EmployeeCrud
             }
 
             app.UseHttpsRedirection();
-
+            
+            app.UseCors("AllowSpecificOrigin");
+            
             app.UseRouting();
 
             app.UseAuthorization();

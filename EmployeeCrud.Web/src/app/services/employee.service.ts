@@ -2,34 +2,52 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { Employee } from '../models/employee.model';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root'
 })
-//TODO: Terminar
+
 export class EmployeeService {
 
   baseUrl = "https://localhost:5001/api";
+
   constructor(private readonly _http: HttpClient) { }
 
 
-  getById(userId:number):Observable<Employee>{
-     return this._http.get<Employee>(`/employee/${userId}`);
+  getById(employeeId:number):Observable<Employee>{
+     return this._http.get<Employee>(`${this.baseUrl}/employee/${employeeId}`)
+     .pipe(map((data:any)=>{
+      return data.data;
+    }));
   }
 
-  delete(userId:number):Observable<any>{
-    return this._http.delete(`/employee/${userId}`);
+  delete(employeeId:number):Observable<boolean>{
+    return this._http.delete(`${this.baseUrl}/employee/${employeeId}`)
+    .pipe(map((data:any)=>{
+      return data.data;
+    }));
   }
 
-  getAll():Observable<any[]>{
-    return this._http.get<any[]>(`/employee`);
+  getAll():Observable<Employee[]>{
+    return this._http.get<Employee[]>(`${this.baseUrl}/employee`)
+    .pipe(map((data:any)=>{
+      return data.data;
+    }));
   }
 
   add(employee:Employee):Observable<any>{
-    return this._http.post(`/employee`,employee);
+    return this._http.post<any>(`${this.baseUrl}/employee`,employee)
+    .pipe(map((data:any)=>{
+      return data.data;
+    }));
   }
 
-  update(employee:Employee):Observable<any>{
-  return this._http.put(`/employee`,employee);
+  update(employeeId:number, employee:Employee):Observable<any>{
+  return this._http.put<any>(`${this.baseUrl}/employee/${employeeId}`,employee)
+  .pipe(map((data:any)=>{
+    return data.data;
+  }));
   }
 }

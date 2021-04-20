@@ -8,6 +8,8 @@ import { EmployeeComponent } from './pages/employee/employee.component';
 import { EditComponent } from './pages/employee/edit/edit.component';
 import { ListComponent } from './pages/employee/list/list.component';
 import { NewComponent } from './pages/employee/new/new.component';
+import { EmployeeFormComponent } from './shared/employee-form/employee-form.component';
+import {ReactiveFormsModule} from '@angular/forms'
 
 @NgModule({
   declarations: [
@@ -15,12 +17,14 @@ import { NewComponent } from './pages/employee/new/new.component';
     EmployeeComponent,
     EditComponent,
     ListComponent,
-    NewComponent
+    NewComponent,
+    EmployeeFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

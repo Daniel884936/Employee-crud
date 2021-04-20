@@ -1,9 +1,9 @@
 
 export interface Employee{
-  employeeId: number;
+  employeeId?: number;
   email: string;
   name: string;
   surnames: string;
-  age: number;
-  phoneNumber: number;
+  age?: number;
+  phoneNumber?: number;
 }

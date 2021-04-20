@@ -6,8 +6,7 @@ import { EMPLOYEE_CHILDREN_ROUTES } from './pages/employee/user.routes';
 const routes: Routes = [
   {path: 'employee',
    component:EmployeeComponent,
-   children:
-    EMPLOYEE_CHILDREN_ROUTES
+   children: EMPLOYEE_CHILDREN_ROUTES
   },
   {path:'**',pathMatch:'full', redirectTo:'employee' }
 ];

@@ -91,7 +91,7 @@ export class EmployeeFormComponent implements OnInit {
 
       console.log(err);
       this.loading = false;
-      this.getErrorDialog(err.error.message).then(res=>{
+      this.getErrorDialog(err.error?.message).then(res=>{
         if(res.isConfirmed){
           this.enableControls();
         }
@@ -125,7 +125,7 @@ export class EmployeeFormComponent implements OnInit {
     },(err:any)=>{
         console.log(err);
         this.loading = false;
-        this.getErrorDialog(err.error.message)
+        this.getErrorDialog(err.error?.message)
         .then(res=>{
 
           if(res.isConfirmed){

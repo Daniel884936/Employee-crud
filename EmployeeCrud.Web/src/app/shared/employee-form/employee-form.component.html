@@ -5,6 +5,7 @@
       <h1 *ngIf="isUpdate">Update <small>employee</small></h1>
       <hr>
   </div>
+
   <div class="col col-9 text-right">
        <button type="button"
                (click)="onBackTolist()"
@@ -12,7 +13,8 @@
                <i class="fas fa-arrow-left    "></i>
                Got to list</button>
   </div>
-  <div class="col mt-4 col-9 shadow p-3 mb-5 bg-white rounded">
+
+  <div class="p-4 col mt-4 col-9 shadow p-3 mb-5 bg-white rounded">
       <form action=""
             (ngSubmit)="onSubmit()"
             class="form"
@@ -22,48 +24,78 @@
         <input type="text"
                formControlName="name"
                name=""
+               [class.is-invalid] = "isInValidField('name')"
                class="form-control"
                placeholder="Name"
                aria-describedby="helpId">
-        <!-- <small id="helpId" class="text-muted">Help text</small> -->
+        <small *ngIf="hasRequiredError('name')"
+              class="text-danger">*Is required</small>
+       <small *ngIf="hasMaxLengthError('name')"
+              class="text-danger">*Max length 30</small>
       </div>
+
       <div class="form-group">
         <label for="">Surnames</label>
         <input type="text"
                formControlName="surnames"
+               [class.is-invalid] = "isInValidField('surnames')"
                name=""
                class="form-control"
                placeholder="Surnames">
-        <!-- <small id="helpId" class="text-muted">Help text</small> -->
+        <small *ngIf="hasRequiredError('surnames')"
+                      class="text-danger">*Is required</small>
+       <small *ngIf="hasMaxLengthError('surnames')"
+                      class="text-danger">*Max length 30</small>
       </div>
+
       <div class="form-group">
         <label for="">Age</label>
-        <input type="text"
+        <input type="number"
                name=""
+               [class.is-invalid] = "isInValidField('age')"
                formControlName="age"
                class="form-control"
                placeholder="Age">
-        <!-- <small id="helpId" class="text-muted">Help text</small> -->
+        <small *ngIf="hasRequiredError('age')"
+               class="text-danger">*Is required</small>
+       <small *ngIf="hasMaxError('age')"
+               class="text-danger">*Is too long</small>
+       <small *ngIf="hasMinError('age')"
+               class="text-danger">*Is too small</small>
       </div>
+
       <div class="form-group">
         <label for="">Phone number</label>
-        <input type="text"
-               formControlName="phoneNumber"
+        <input  type="number"
+                formControlName="phoneNumber"
                 name=""
-                id=""
+                [class.is-invalid] = "isInValidField('phoneNumber')"
                 class="form-control"
                 placeholder="Phone number">
-        <!-- <small id="helpId" class="text-muted">Help text</small> -->
+         <small *ngIf="hasRequiredError('phoneNumber')"
+               class="text-danger">*Is required</small>
+       <small *ngIf="hasMaxError('phoneNumber')"
+               class="text-danger">*Is too long</small>
+       <small *ngIf="hasMinError('phoneNumber')"
+               class="text-danger">*Is too small</small>
       </div>
+
       <div class="form-group">
         <label for="">Email</label>
         <input type="text"
                name=""
+               [class.is-invalid] = "isInValidField('email')"
                formControlName ="email"
                class="form-control"
                placeholder="Email">
-        <!-- <small id="helpId" class="text-muted">Help text</small> -->
+        <small *ngIf="hasRequiredError('email')"
+               class="text-danger">*Is required</small>
+        <small *ngIf="hasEmailFormatError && !hasMaxLengthError('email')"
+               class="text-danger">*Incorrec format</small>
+        <small *ngIf="!hasEmailFormatError &&  hasMaxLengthError('email')"
+              class="text-danger">*Max length 30</small>
       </div>
+
       <div class="ml-5 mr-5">
         <button type="submit"
                  name=""

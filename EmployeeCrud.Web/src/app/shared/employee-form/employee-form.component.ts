@@ -25,8 +25,6 @@ export class EmployeeFormComponent implements OnInit {
               private readonly _router: Router,
               public  readonly _validationService: ValidationService) {
               this.initForm();
-              this.isUpdate = false;
-              this.loading = false;
    }
 
   ngOnInit(): void {
@@ -81,16 +79,23 @@ export class EmployeeFormComponent implements OnInit {
   }
 
   private updateEmployee(employee:Employee):void{
+
     this.disabledControls();
     this.loading = true;
     this._employeeService.update(this.employeId,employee).subscribe(data=>{
+
       console.log(data);
       this.disPlayToast('Updated successfully');
       this._router.navigate(['../../list']);
     },(err)=>{
+
       console.log(err);
       this.loading = false;
-      this.enableControls();
+      this.getErrorDialog(err.error.message).then(res=>{
+        if(res.isConfirmed){
+          this.enableControls();
+        }
+      })
     });
   }
 
@@ -108,17 +113,26 @@ export class EmployeeFormComponent implements OnInit {
 
 
   private addEmployee(employee:Employee):void{
+
     this.disabledControls();
     this.loading = true;
     this._employeeService.add(employee).subscribe(data=>{
+
       this.formGroup.reset();
       this.disPlayToast('Saved successfully');
       this.loading = false;
       this.enableControls();
     },(err:any)=>{
-      this.enableControls();
-      this.loading = false;
-      console.log(err);
+        console.log(err);
+        this.loading = false;
+        this.getErrorDialog(err.error.message)
+        .then(res=>{
+
+          if(res.isConfirmed){
+          this.formGroup.reset();
+          this.enableControls();
+          }
+        })
     });
   }
 
@@ -132,12 +146,21 @@ export class EmployeeFormComponent implements OnInit {
       });
   }
 
+  getErrorDialog(text:string){
+    return Swal.fire({
+      title: 'Something is wrong',
+      text: text,
+      icon : 'error',
+      allowOutsideClick : false
+    });
+  }
+
   private disPlayToast(title:string):void{
     const Toast = Swal.mixin({
       toast: true,
       position: 'bottom-left',
       showConfirmButton: false,
-      timer: 2500,
+      timer: 3000,
       timerProgressBar: true,
       didOpen: (toast) => {
         toast.addEventListener('mouseenter', Swal.stopTimer)

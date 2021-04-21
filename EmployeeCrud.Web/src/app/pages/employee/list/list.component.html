@@ -6,7 +6,8 @@
     <i class="fas fa-plus    "></i>
     Add</button>
 </div>
-<table class="table animate__animated animate__fadeIn animate__faster">
+
+<table  *ngIf="employees.length > 0" class="table animate__animated animate__fadeIn animate__faster">
   <thead class="thead-dark">
     <tr>
       <th>#</th>
@@ -37,3 +38,14 @@
     </tr>
   </tbody>
 </table>
+
+<div class="row animate__animated animate__headShake"
+    *ngIf="employees.length === 0 && !loading">
+  <div class="col">
+    <div class="alert alert-warning text-center" role="alert">
+    <h4 class="alert-heading">No records</h4>
+    <p><i class="fas fa-exclamation  fa-2x  "></i></p>
+    <p class="mb-0">Please add a new employee</p>
+    </div>
+  </div>
+</div>

@@ -7,6 +7,12 @@
     Add</button>
 </div>
 
+<div class="text-center" *ngIf="loading">
+  <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+  <span class="sr-only">Loading...</span>
+</div>
+</div>
+
 <table  *ngIf="employees.length > 0" class="table animate__animated animate__fadeIn animate__faster">
   <thead class="thead-dark">
     <tr>

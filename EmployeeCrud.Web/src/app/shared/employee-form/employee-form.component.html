@@ -24,13 +24,13 @@
         <input type="text"
                formControlName="name"
                name=""
-               [class.is-invalid] = "isInValidField('name')"
+               [class.is-invalid] = "_validationService.isInValidField(formGroup,'name')"
                class="form-control"
                placeholder="Name"
                aria-describedby="helpId">
-        <small *ngIf="hasRequiredError('name')"
+        <small *ngIf="_validationService.hasRequiredError(formGroup,'name')"
               class="text-danger">*Is required</small>
-       <small *ngIf="hasMaxLengthError('name')"
+       <small *ngIf="_validationService.hasMaxLengthError(formGroup,'name')"
               class="text-danger">*Max length 30</small>
       </div>
 
@@ -38,13 +38,13 @@
         <label for="">Surnames</label>
         <input type="text"
                formControlName="surnames"
-               [class.is-invalid] = "isInValidField('surnames')"
+               [class.is-invalid] = "_validationService.isInValidField(formGroup,'surnames')"
                name=""
                class="form-control"
                placeholder="Surnames">
-        <small *ngIf="hasRequiredError('surnames')"
+        <small *ngIf="_validationService.hasRequiredError(formGroup,'surnames')"
                       class="text-danger">*Is required</small>
-       <small *ngIf="hasMaxLengthError('surnames')"
+       <small *ngIf="_validationService.hasMaxLengthError(formGroup,'surnames')"
                       class="text-danger">*Max length 30</small>
       </div>
 
@@ -52,15 +52,15 @@
         <label for="">Age</label>
         <input type="number"
                name=""
-               [class.is-invalid] = "isInValidField('age')"
+               [class.is-invalid] = "_validationService.isInValidField(formGroup,'age')"
                formControlName="age"
                class="form-control"
                placeholder="Age">
-        <small *ngIf="hasRequiredError('age')"
+        <small *ngIf="_validationService.hasRequiredError(formGroup,'age')"
                class="text-danger">*Is required</small>
-       <small *ngIf="hasMaxError('age')"
+       <small *ngIf="_validationService.hasMaxError(formGroup,'age')"
                class="text-danger">*Is too long</small>
-       <small *ngIf="hasMinError('age')"
+       <small *ngIf="_validationService.hasMinError(formGroup,'age')"
                class="text-danger">*Is too small</small>
       </div>
 
@@ -69,14 +69,14 @@
         <input  type="number"
                 formControlName="phoneNumber"
                 name=""
-                [class.is-invalid] = "isInValidField('phoneNumber')"
+                [class.is-invalid] = "_validationService.isInValidField(formGroup,'phoneNumber')"
                 class="form-control"
                 placeholder="Phone number">
-         <small *ngIf="hasRequiredError('phoneNumber')"
+         <small *ngIf="_validationService.hasRequiredError(formGroup,'phoneNumber')"
                class="text-danger">*Is required</small>
-       <small *ngIf="hasMaxError('phoneNumber')"
+       <small *ngIf="_validationService.hasMaxError(formGroup,'phoneNumber')"
                class="text-danger">*Is too long</small>
-       <small *ngIf="hasMinError('phoneNumber')"
+       <small *ngIf="_validationService.hasMinError(formGroup,'phoneNumber')"
                class="text-danger">*Is too small</small>
       </div>
 
@@ -84,23 +84,32 @@
         <label for="">Email</label>
         <input type="text"
                name=""
-               [class.is-invalid] = "isInValidField('email')"
+               [class.is-invalid] = "_validationService.isInValidField(formGroup,'email')"
                formControlName ="email"
                class="form-control"
                placeholder="Email">
-        <small *ngIf="hasRequiredError('email')"
+        <small *ngIf="_validationService.hasRequiredError(formGroup,'email')"
                class="text-danger">*Is required</small>
-        <small *ngIf="hasEmailFormatError && !hasMaxLengthError('email')"
+        <small *ngIf=" (_validationService.hasEmailFormatError(formGroup)
+                       && !_validationService.hasMaxLengthError(formGroup,'email'))"
                class="text-danger">*Incorrec format</small>
-        <small *ngIf="!hasEmailFormatError &&  hasMaxLengthError('email')"
+        <small *ngIf="(!_validationService.hasEmailFormatError(formGroup)
+                &&  _validationService.hasMaxLengthError(formGroup,'email'))"
               class="text-danger">*Max length 30</small>
       </div>
 
       <div class="ml-5 mr-5">
         <button type="submit"
+                 [disabled]="loading"
                  name=""
                  id=""
-                 class="btn btn-primary btn-sm btn-block" >Save</button>
+                 class="btn btn-primary btn-sm btn-block" >
+                 <span *ngIf="loading" class="spinner-border spinner-border-sm"
+                       role="status"
+                       aria-hidden="true"></span>
+                <span *ngIf="!loading">Save</span>
+                <span *ngIf="loading"> Saving...</span>
+                </button>
       </div>
     </form>
   </div>

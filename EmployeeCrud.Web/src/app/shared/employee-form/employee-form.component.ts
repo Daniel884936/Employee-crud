@@ -4,6 +4,7 @@ import { Employee } from 'src/app/models/employee.model';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import Swal from 'sweetalert2';
+import { ValidationService } from 'src/app/services/validation.service';
 
 
 
@@ -17,12 +18,15 @@ export class EmployeeFormComponent implements OnInit {
   private employeId:number;
   formGroup:FormGroup;
   isUpdate:boolean;
+  loading:boolean;
   constructor(private readonly _activatedRoute:ActivatedRoute,
               private readonly _employeeService:EmployeeService,
               private readonly _formBuilder: FormBuilder,
-              private readonly _router: Router) {
+              private readonly _router: Router,
+              public  readonly _validationService: ValidationService) {
               this.initForm();
               this.isUpdate = false;
+              this.loading = false;
    }
 
   ngOnInit(): void {
@@ -36,37 +40,6 @@ export class EmployeeFormComponent implements OnInit {
       return;
     }
   }
-
-  isInValidField(controlName:string):boolean{
-    const control =  this.formGroup.get(controlName);
-    return !control.valid && control.touched;
-  }
-
-   hasRequiredError(controlName:string):boolean {
-    const control =  this.formGroup.get(controlName);
-    return control.errors?.required && control.touched;
-  }
-
-  hasMaxLengthError(controlName:string):boolean{
-    const control =  this.formGroup.get(controlName);
-    return control.errors?.maxlength && control.touched;
-  }
-
-  hasMinError(controlName:string):boolean{
-    const control =  this.formGroup.get(controlName);
-    return control.errors?.min && control.touched;
-  }
-
-  hasMaxError(controlName:string):boolean{
-    const control =  this.formGroup.get(controlName);
-    return control.errors?.max && control.touched;
-  }
-
-   get hasEmailFormatError():boolean {
-    const control =  this.formGroup.get('email');
-    return control.errors?.email && control.touched;
-  }
-
 
   public onBackTolist():void{
     if(this.employeId){
@@ -97,7 +70,6 @@ export class EmployeeFormComponent implements OnInit {
       this.updateEmployee(employee);
       return;
     }
-    console.log(employee)
     this.addEmployee(employee);
   }
 
@@ -109,20 +81,43 @@ export class EmployeeFormComponent implements OnInit {
   }
 
   private updateEmployee(employee:Employee):void{
+    this.disabledControls();
+    this.loading = true;
     this._employeeService.update(this.employeId,employee).subscribe(data=>{
       console.log(data);
       this.disPlayToast('Updated successfully');
+      this._router.navigate(['../../list']);
     },(err)=>{
       console.log(err);
+      this.loading = false;
+      this.enableControls();
     });
   }
 
+  private disabledControls():void{
+    Object.values(this.formGroup.controls).forEach(control=>{
+      control.disable();
+    })
+  }
+
+  private enableControls():void{
+    Object.values(this.formGroup.controls).forEach(control=>{
+      control.enable();
+    })
+  }
+
+
   private addEmployee(employee:Employee):void{
+    this.disabledControls();
+    this.loading = true;
     this._employeeService.add(employee).subscribe(data=>{
-      console.log(data);
       this.formGroup.reset();
       this.disPlayToast('Saved successfully');
+      this.loading = false;
+      this.enableControls();
     },(err:any)=>{
+      this.enableControls();
+      this.loading = false;
       console.log(err);
     });
   }
@@ -154,7 +149,5 @@ export class EmployeeFormComponent implements OnInit {
       title: title
     })
   }
-
-
 }
 

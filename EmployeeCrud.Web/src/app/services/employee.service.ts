@@ -33,6 +33,7 @@ export class EmployeeService {
   public getAll():Observable<Employee[]>{
     return this._http.get<Employee[]>(`${this.baseUrl}/employee`)
     .pipe(map((data:any)=>{
+      console.log(data);
       return data.data;
     }));
   }
